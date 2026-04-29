@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saurabh Godase | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   ROOT & RESET
+══════════════════════════════════════════ */
+:root {
+  --black:   #080810;
+  --dark:    #0f0f1a;
+  --card:    #13131f;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --cyan:    #00e5ff;
+  --violet:  #b06cff;
+  --rose:    #ff4d6d;
+  --gold:    #ffd166;
+  --white:   #f0f0fa;
+  --muted:   #7070a0;
+  --dim:     #3a3a5c;
+  --grad:    linear-gradient(135deg, #00e5ff, #b06cff);
+  --grad2:   linear-gradient(135deg, #b06cff, #ff4d6d);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 3px; }
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* Ambient glow */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-orb-1 {
+  width: 500px; height: 500px;
+  background: rgba(0,229,255,0.06);
+  top: -100px; left: -100px;
+}
+.glow-orb-2 {
+  width: 400px; height: 400px;
+  background: rgba(176,108,255,0.06);
+  bottom: 20%; right: -100px;
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 2rem;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  background: rgba(8,8,16,0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--white);
+  background: var(--border);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  width: 22px; height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 68px; left: 0; right: 0;
+  background: rgba(8,8,16,0.98);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 2rem;
+  z-index: 999;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--cyan); }
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+main { padding-top: 68px; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+section {
+  padding: 6rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--cyan);
+}
+
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 3rem;
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  min-height: calc(100vh - 68px);
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.hero-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--grad);
+  padding: 2px;
+  margin-bottom: 2rem;
+  display: inline-flex;
+}
+
+.hero-avatar-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem;
+  color: var(--cyan);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(0,229,255,0.08);
+  border: 1px solid rgba(0,229,255,0.2);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--cyan);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.03em;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 500px;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: var(--grad);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,229,255,0.25);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--border);
+  border-color: var(--dim);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════
+   CARDS
+══════════════════════════════════════════ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  border-color: var(--border2);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.4);
+}
+
+/* ══════════════════════════════════════════
+   ABOUT
+══════════════════════════════════════════ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+
+.about-text p:last-child { margin-bottom: 0; }
+
+.about-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.pill:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border2);
+  transform: translateX(4px);
+}
+
+.pill-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.pill-text strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.pill-text span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════════════════
+   EDUCATION
+══════════════════════════════════════════ */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.edu-card {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.edu-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--grad);
+}
+
+.edu-grade {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+
+.edu-level {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+}
+
+.edu-detail {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════════════════
+   SKILLS
+══════════════════════════════════════════ */
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.skills-block h3 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 1.5rem;
+}
+
+.skill-row {
+  margin-bottom: 1.25rem;
+}
+
+.skill-row:last-child { margin-bottom: 0; }
+
+.skill-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.skill-meta span:first-child { color: var(--white); font-weight: 500; }
+.skill-meta span:last-child { color: var(--muted); font-size: 0.78rem; }
+
+.skill-track {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.skill-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--grad);
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.soft-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tag {
+  padding: 0.45rem 0.9rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.tag:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,229,255,0.05);
+}
+
+/* ══════════════════════════════════════════
+   PROJECTS
+══════════════════════════════════════════ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  border-radius: 16px;
+}
+
+.project-card:hover::after { opacity: 0.04; }
+
+.project-card > * { position: relative; z-index: 1; }
+
+.project-chip {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  background: rgba(176,108,255,0.1);
+  border: 1px solid rgba(176,108,255,0.2);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--violet);
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+
+.project-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+
+.project-card p {
+  font-size: 0.87rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-stack span {
+  padding: 0.25rem 0.55rem;
+  background: rgba(255,255,255,0.04);
+  border-radius: 5px;
+  font-size: 0.75rem;
+  color: var(--dim);
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   EXPERIENCE
+══════════════════════════════════════════ */
+.experience-card {
+  position: relative;
+  border-left: 2px solid transparent;
+  border-image: var(--grad);
+  border-image-slice: 1;
+  border-radius: 0 16px 16px 0 !important;
+  padding-left: 2rem !important;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.exp-header h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.exp-header p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.exp-date {
+  padding: 0.3rem 0.75rem;
+  background: rgba(176,108,255,0.1);
+  border: 1px solid rgba(176,108,255,0.2);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: var(--violet);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.exp-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.exp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.exp-tags span {
+  padding: 0.3rem 0.7rem;
+  background: rgba(0,229,255,0.06);
+  border: 1px solid rgba(0,229,255,0.15);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: var(--cyan);
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   CERTIFICATIONS
+══════════════════════════════════════════ */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.cert-card {
+  display: block;
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  color: inherit;
+}
+
+.cert-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.cert-visual {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  transition: transform 0.3s ease;
+}
+
+.cert-card:hover .cert-visual { transform: scale(1.1); }
+
+.cert-body {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.cert-body h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cert-body p {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cert-link-text {
+  font-size: 0.72rem;
+  color: var(--cyan);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* ══════════════════════════════════════════
+   GOALS / ROADMAP
+══════════════════════════════════════════ */
+.roadmap {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.roadmap::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--cyan), var(--violet), transparent);
+  border-radius: 2px;
+}
+
+.roadmap-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.roadmap-item:last-child { padding-bottom: 0; }
+
+.roadmap-dot {
+  position: absolute;
+  left: -2.5rem;
+  top: 4px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--black);
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 16px rgba(0,229,255,0.5);
+}
+
+.roadmap-item:nth-child(2) .roadmap-dot { border-color: var(--violet); box-shadow: 0 0 16px rgba(176,108,255,0.5); }
+.roadmap-item:nth-child(3) .roadmap-dot { border-color: var(--rose); box-shadow: 0 0 16px rgba(255,77,109,0.4); }
+.roadmap-item:nth-child(4) .roadmap-dot { border-color: var(--gold); box-shadow: 0 0 16px rgba(255,209,102,0.4); }
+
+.roadmap-period {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.3rem;
+}
+
+.roadmap-item:nth-child(2) .roadmap-period { color: var(--violet); }
+.roadmap-item:nth-child(3) .roadmap-period { color: var(--rose); }
+.roadmap-item:nth-child(4) .roadmap-period { color: var(--gold); }
+
+.roadmap-item h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.roadmap-item p {
+  font-size: 0.87rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
+.contact-wrap {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.contact-heading {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.contact-sub {
+  color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.contact-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--white);
+  transition: all 0.2s ease;
+}
+
+.contact-item:hover {
+  border-color: var(--border2);
+  transform: translateX(4px);
+  background: rgba(255,255,255,0.04);
+}
+
+.contact-ico {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.contact-details span {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.contact-details strong {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--dim);
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════════
+   DIVIDER
+══════════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .about-grid,
+  .skills-layout,
+  .projects-grid { grid-template-columns: 1fr; }
+
+  .edu-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+
+  section { padding: 4rem 0; }
+
+  .hero h1 { font-size: clamp(2.5rem, 8vw, 3.5rem); }
+}
+
+@media (max-width: 480px) {
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  .container { padding: 0 1.25rem; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient glows -->
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<!-- ══ NAVIGATION ══ -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">SG</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#goals">Roadmap</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#education" onclick="closeMobile()">Education</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#certifications" onclick="closeMobile()">Certifications</a>
+  <a href="#goals" onclick="closeMobile()">Roadmap</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<main>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-avatar">
+        <div class="hero-avatar-inner">SG</div>
+      </div>
+      <div class="hero-badge">Open to opportunities</div>
+      <h1>Saurabh<br><em>Godase</em></h1>
+      <p class="hero-sub">First-year Computer Science student, curious builder, and tech enthusiast. I'm here to learn, grow, and build things that matter.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Get in Touch →</a>
+        <a href="#projects" class="btn-ghost">View Projects</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bg-grid"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Who I am</h2>
+    </div>
+    <div class="about-grid fade-up">
+      <div class="about-text">
+        <p>Hey! I'm Saurabh — a first-year Computer Science (Software Engineering) student with a genuine curiosity for how technology works and what it can do.</p>
+        <p>I'm early in my journey and proud of that. I believe growth starts with honesty about where you are, and I'm fully committed to learning every single day.</p>
+        <p>Outside of code, I'm a film enthusiast who loves diving into different genres, and I enjoy collaborating with people who are as curious as I am.</p>
+      </div>
+      <div class="about-pills">
+        <div class="pill">
+          <div class="pill-icon">🎓</div>
+          <div class="pill-text">
+            <strong>CS Student</strong>
+            <span>Software Engineering · B.Tech</span>
+          </div>
+        </div>
+        <div class="pill">
+          <div class="pill-icon">💡</div>
+          <div class="pill-text">
+            <strong>Eager Learner</strong>
+            <span>Always exploring new tech</span>
+          </div>
+        </div>
+        <div class="pill">
+          <div class="pill-icon">🎬</div>
+          <div class="pill-text">
+            <strong>Movie Buff</strong>
+            <span>Love all genres</span>
+          </div>
+        </div>
+        <div class="pill">
+          <div class="pill-icon">🤝</div>
+          <div class="pill-text">
+            <strong>Team Player</strong>
+            <span>Datathon hackathon participant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ EDUCATION ══ -->
+<section id="education">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Education</div>
+      <h2 class="section-title">Academic journey</h2>
+    </div>
+    <div class="edu-grid fade-up">
+      <div class="card edu-card">
+        <div class="edu-grade">89%</div>
+        <div class="edu-level">Class 10th</div>
+        <div class="edu-detail">Secondary Education</div>
+      </div>
+      <div class="card edu-card">
+        <div class="edu-grade">74.5%</div>
+        <div class="edu-level">Class 12th</div>
+        <div class="edu-detail">Higher Secondary Education</div>
+      </div>
+      <div class="card edu-card">
+        <div class="edu-grade" style="font-size:2rem;">1st Year</div>
+        <div class="edu-level">B.Tech CSE</div>
+        <div class="edu-detail">Software Engineering · Ongoing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Skills</div>
+      <h2 class="section-title">What I'm learning</h2>
+    </div>
+    <div class="skills-layout fade-up">
+      <div class="card skills-block">
+        <h3>Technical</h3>
+        <div class="skill-row">
+          <div class="skill-meta"><span>HTML</span><span>Beginner</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="35%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span>CSS</span><span>Beginner</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="30%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span>Python</span><span>Learning</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="25%"></div></div>
+        </div>
+      </div>
+      <div class="card skills-block">
+        <h3>Soft Skills</h3>
+        <div class="soft-tags">
+          <span class="tag">🧩 Problem Solving</span>
+          <span class="tag">👥 Teamwork</span>
+          <span class="tag">📚 Quick Learning</span>
+          <span class="tag">💬 Communication</span>
+          <span class="tag">🎯 Adaptability</span>
+          <span class="tag">⏱ Time Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">Things I've built</h2>
+    </div>
+    <div class="projects-grid fade-up">
+      <div class="card project-card">
+        <div class="project-chip">Design Thinking</div>
+        <h3>♻️ Trash to Treasure</h3>
+        <p>A sustainability initiative converting plastic waste into functional furniture for rural schools. Tackled real environmental and social challenges using the Design Thinking framework.</p>
+        <p>Covered problem identification, ideation, prototyping, and community impact presentations.</p>
+        <div class="project-stack">
+          <span>Sustainability</span>
+          <span>Social Impact</span>
+          <span>Design Thinking</span>
+          <span>Recycling</span>
+        </div>
+      </div>
+      <div class="card project-card">
+        <div class="project-chip">Portfolio</div>
+        <h3>💼 Personal Portfolio</h3>
+        <p>The very website you're on — built from scratch to practice HTML and CSS while creating a professional online presence to share my journey.</p>
+        <p>Features responsive layout, modern dark UI, and smooth interactions.</p>
+        <div class="project-stack">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+          <span>Responsive</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">Where I've been</h2>
+    </div>
+    <div class="card experience-card fade-up">
+      <div class="exp-header">
+        <div>
+          <h3>Datathon Hackathon</h3>
+          <p>Participant · Team Event</p>
+        </div>
+        <span class="exp-date">2024</span>
+      </div>
+      <p class="exp-desc">Competed in a Datathon hackathon as part of a team — my first real taste of collaborative, time-pressured problem solving. Learned to think fast, communicate clearly, and persist under pressure.</p>
+      <p class="exp-desc">Even as beginners, we gave it our all and came away with real lessons in teamwork, presenting ideas, and handling uncertainty.</p>
+      <div class="exp-tags">
+        <span>Team Collaboration</span>
+        <span>Problem Solving</span>
+        <span>Time Management</span>
+        <span>Presentation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CERTIFICATIONS ══ -->
+<section id="certifications">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Certifications</div>
+      <h2 class="section-title">Credentials earned</h2>
+    </div>
+    <div class="cert-grid fade-up">
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1U6rd00axiXY-eqvTxqyW7SCFUK30xHOq/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#0d1b2a,#1b3a6e);">🏅</div>
+        <div class="cert-body">
+          <h4>NASSCOM</h4>
+          <p>Gold Level</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1XwSpxjCWZ02w-hmN1l6zeLIelRDRgNeS/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#0c0c1e,#1a0840);">🤖</div>
+        <div class="cert-body">
+          <h4>Claude 101</h4>
+          <p>Anthropic</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1QpN_TzUsDbnwMHen7l0vCQ5386Jzv4F_/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#0a1520,#0d2640);">🧠</div>
+        <div class="cert-body">
+          <h4>AI Fluency</h4>
+          <p>Framework & Foundations</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1fGVX1VHirUggYC6F51I01GPjY45HQaFY/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#0a1020,#0d1e40);">🎓</div>
+        <div class="cert-body">
+          <h4>AI Fluency</h4>
+          <p>For Students</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1VYGww0bsMH3DP28Jsy-y_tgFvhUNE3V1/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#081a0a,#0d2e10);">🌍</div>
+        <div class="cert-body">
+          <h4>AI Fluency</h4>
+          <p>For Nonprofits</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1Zq7dk1AqdS3YDaLu5hNqRvG7aRAUHoPC/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#1a1200,#2e2000);">🐍</div>
+        <div class="cert-body">
+          <h4>Python Essentials 1</h4>
+          <p>Cisco Networking Academy</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/1F3PppHuS_TjroPb3z4U-Rc56C9sPS_NZ/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#1a0a00,#2e1500);">🐍</div>
+        <div class="cert-body">
+          <h4>Python Essentials 2</h4>
+          <p>Cisco Networking Academy</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://drive.google.com/file/d/13boJZ6BCQZO-yLkXiqo7GcY8QqkEUxNT/view?usp=sharing" target="_blank">
+        <div class="cert-visual" style="background: linear-gradient(135deg,#120820,#220d40);">🏆</div>
+        <div class="cert-body">
+          <h4>Datathon</h4>
+          <p>Participation Certificate</p>
+          <div class="cert-link-text">View ↗</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ GOALS ══ -->
+<section id="goals">
+  <div class="container">
+    <div class="fade-up">
+      <div class="section-label">Roadmap</div>
+      <h2 class="section-title">Where I'm headed</h2>
+    </div>
+    <div class="card fade-up">
+      <div class="roadmap">
+        <div class="roadmap-item">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-period">Right Now</div>
+          <h4>Strengthen the Fundamentals</h4>
+          <p>Mastering HTML & CSS, building real practice projects, and continuing Python through Cisco's program.</p>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-period">Next 6 Months</div>
+          <h4>JavaScript & Advanced Python</h4>
+          <p>Adding interactivity to web projects and exploring Python for data handling and automation tasks.</p>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-period">1 Year Goal</div>
+          <h4>Full-Stack Basics + DSA</h4>
+          <p>Learning a backend framework, understanding databases, and starting Data Structures & Algorithms practice.</p>
+        </div>
+        <div class="roadmap-item">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-period">Long Term</div>
+          <h4>Specialize, Contribute & Intern</h4>
+          <p>Choose a specialization (Web, AI/ML, or Mobile), contribute to open source, and land my first internship.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap fade-up">
+      <div class="section-label" style="justify-content:center;">Contact</div>
+      <h2 class="contact-heading">Let's connect</h2>
+      <p class="contact-sub">I'm always open to meeting fellow learners, mentors, and anyone curious about tech. Drop me a message!</p>
+      <div class="contact-cards">
+        <a href="mailto:saurabhgodase@email.com" class="contact-item">
+          <div class="contact-ico">📧</div>
+          <div class="contact-details">
+            <span>Email</span>
+            <strong>saurabhgodase@email.com</strong>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/saurabhgodase" target="_blank" class="contact-item">
+          <div class="contact-ico">💼</div>
+          <div class="contact-details">
+            <span>LinkedIn</span>
+            <strong>linkedin.com/in/saurabhgodase</strong>
+          </div>
+        </a>
+        <a href="https://instagram.com/saurabhgodase" target="_blank" class="contact-item">
+          <div class="contact-ico">📸</div>
+          <div class="contact-details">
+            <span>Instagram</span>
+            <strong>@saurabhgodase</strong>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 Saurabh Godase · Built with curiosity and lots of learning</p>
+</footer>
+
+<script>
+  // ── Mobile menu ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // ── Scroll-triggered fade-up ──
+  const fadeEls = document.querySelectorAll('.fade-up');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ── Animate skill bars ──
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          const w = bar.getAttribute('data-width');
+          setTimeout(() => { bar.style.width = w; }, 200);
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.skills-layout').forEach(el => skillObserver.observe(el));
+
+  // ── Navbar opacity on scroll ──
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 40
+      ? 'rgba(8,8,16,0.97)'
+      : 'rgba(8,8,16,0.8)';
+  }, { passive: true });
+</script>
+</body>
+</html>
